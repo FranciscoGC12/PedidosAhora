@@ -1,0 +1,32 @@
+html, body{
+    margin: 0;
+    padding: 0;
+    
+}
+header{
+    overflow: hidden;
+    width: 100%;
+    background-color: #FFFF;
+    position: fixed;
+    display: block;
+
+}
+header.fixed{
+    position: fixed;
+    top: 0;
+}
+
+main{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    text-align: center;
+}
+
+section{
+    background-color: red;
+}
+
+.summary{
+    background-color: #FADCA2;
+}
