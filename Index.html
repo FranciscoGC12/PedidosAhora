@@ -1,38 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
-    <title>Mi primera página</title>
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Este seria el menu principal</title>
+  <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <header>
-        <button type="menu"></button>
-        <a href="Index.html"></a>
-        <button type="button" href="Login.html">Login</button>    
-    </header>
+  <header>
+    <div class="logo">Pedidos Ahorra</div>
+    <button class="menu-toggle">☰</button>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
 
-    <main>
-     <section class="summary">
-         <h1>PEDIDOS AHORRA</h1>
-         <p></p>
-     </section>
-    
-     <section class="Products">
-          <a>
-              Hola aqui voy yo
-               <img src="C:\Users\franc\OneDrive\Desktop\PedidosAhora\Papas.jpg">
-          </a>
-            <a></a>
-            <a></a>
-     </section>
-    </main>>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>¡Bienvenido a Pedidos Ahorra!</h1>
+      <a href="products.html">Ver Productos</a>
+    </div>
+  </section>
 
-    <footer>
-        <object></object>
-    
-    </footer>
+  <main>
+    <section class="products">
+      <div class="product-card">
+        <img src="img/papas.jpg" alt="Papas fritas">
+        <div class="card-content">
+          <h3>Papas Fritas</h3>
+          <p>Crocantes y deliciosas, perfectas como acompañamiento.</p>
+        </div>
+      </div>
+      <!-- Repite .product-card para más productos -->
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Pedidos Ahorra. Todos los derechos reservados.</p>
+  </footer>
 </body>
 </html>
