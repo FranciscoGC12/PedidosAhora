@@ -13,7 +13,7 @@
     <nav>
       <a href="index.html">Inicio</a>
       <a href="login.html">Login</a>
-      <button id="carro--boton" class="relative">
+      <button id="carro-boton" class="relative">
         🛒
         <span id="carro-count" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
       </button>
@@ -74,5 +74,23 @@
     </div>
   </footer>
 
+  <div id="carro-modelo" class="carro-oculto">
+    <div class="carro-ventana"></div>
+    <div class="carro-contenido">
+      <button id="cerrar-carro" class="cerrar-btoon">✕</button>
+      <h2>Tu Carrito</h2>
+      <div id="carro-contenido">
+        <!-- Aquí se inyectarán en java script -->
+      </div>
+      <div class="carro-total">
+        <span>Total:</span>
+        <span id="carro-total">$0.00</span>
+      </div>
+      <button id="confirmar-pedido" class="confirmar-boton">Confirmar pedido</button>
+    </div>
+  </div>
+
 </body>
+<script src="carrito.js"></script>
+
 </html>
