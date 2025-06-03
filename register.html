@@ -1,0 +1,36 @@
+<!-- register.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Usuario</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="registro-contenido">
+        <h2>Crear Cuenta</h2>
+        <form action="procesar_registro.html" method="POST">
+            <input type="text" id="usuario" name="usuario" placeholder="Nombre de usuario" required>
+            
+            <input type="email" id="email" name="email" placeholder="Correo electrónico" required>
+            
+            <input type="password" id="contraseña" name="contraseña" placeholder="Contraseña" required>
+            
+            <input type="password" id="confirmar-contraseña" name="confirmar-contraseña" placeholder="Confirmar contraseña" required>
+            
+            <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+            
+            <input type="text" id="apellido" name="apellido" placeholder="Apellido" required>
+            
+            <input type="text" id="direccion" name="direccion" placeholder="Dirección" required>
+            
+            <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" required>
+            
+            <button type="submit">Registrarse</button>
+        </form>
+        <div class="login-link">
+            ¿Ya tienes cuenta? <a href="login.html">Iniciar sesión</a>
+        </div>
+    </div>
+</body>
+</html>

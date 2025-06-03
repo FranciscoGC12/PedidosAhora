@@ -1,10 +1,10 @@
     /* Reset básico */
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* Variables de color y tipografía */
+    /* Variables de color */
     :root {
-      --primary-color: #DA291C;   /* Rojo McDonald's */
-      --secondary-color: #FFC72C; /* Amarillo McDonald's */
+      --primary-color: #DA291C;  
+      --secondary-color: #FFC72C; 
       --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
@@ -13,7 +13,7 @@
       color: #333;
     }
 
-    /* Header fijo */
+    /* Estilos generales */
     header {
       background-color: var(--primary-color);
       color: #fff;
@@ -35,7 +35,7 @@
       margin-left: 1.5rem;
       font-weight: 500;
     }
-    .menu-toggle {
+    .menu {
       display: none;
       background: none;
       border: none;
@@ -43,31 +43,46 @@
       color: #fff;
     }
 
-    /* Hero banner */
-    .hero {
-      background: url('img/hero.jpg') center/cover no-repeat;
+    /* Titulo */
+    .titulo {
       height: 60vh;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
     }
-    .hero::before {
+
+    .titulo::before {
+      background-image: url('img/GenteFeliz.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: blur(3px);
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(0,0,0,0.4);
     }
-    .hero-content {
+
+    .titulo-contenido h1 {
       position: relative;
       text-align: center;
       color: #fff;
-    }
-    .hero-content h1 {
       font-size: 3rem;
       margin-bottom: 1rem;
     }
-    .hero-content a {
+
+    /* Sección de productos */
+    .productos {
+      background: url('img/MainComida.jpg') center/cover no-repeat;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+
+    .productos a {
       background-color: var(--secondary-color);
       color: var(--primary-color);
       padding: 0.75rem 1.5rem;
@@ -77,42 +92,7 @@
       border-radius: 0.5rem;
     }
 
-    /* Sección de productos */
-    .products {
-      padding: 2rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 1.5rem;
-    }
-    .product-card {
-      border: 1px solid #ddd;
-      border-radius: 0.5rem;
-      overflow: hidden;
-      transition: transform 0.3s;
-      background: #fff;
-    }
-    .product-card:hover {
-      transform: translateY(-5px);
-    }
-    .product-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-    .card-content {
-      padding: 1rem;
-    }
-    .card-content h3 {
-      margin-bottom: 0.5rem;
-      font-size: 1.25rem;
-      color: var(--primary-color);
-    }
-    .card-content p {
-      font-size: 0.9rem;
-      color: #666;
-    }
 
-    /* Footer */
     footer {
       background-color: #f8f8f8;
       text-align: center;
@@ -121,7 +101,7 @@
       font-size: 0.9rem;
     }
 
-    /* Estilos responsive */
+    /* Para pagina pequeña */
     @media (max-width: 768px) {
       nav { display: none; }
       .menu-toggle { display: block; }

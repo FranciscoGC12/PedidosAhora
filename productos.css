@@ -1,0 +1,163 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --primary-color: #DA291C;
+    --secondary-color: #FFC72C; 
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+/* Cuerpo de la pagina*/
+body{
+    font-family: var(--font-family);
+    color: #333;
+    }
+
+/* Encabezado */
+header{
+    background-color: var(--primary-color);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* Logo */
+.logo{
+    font-size: 1.5rem;
+    font-weight: bold;
+    }
+
+/* Navegación */
+nav a{
+    color: #fff;
+    text-decoration: none;
+    margin-left: 1.5rem;
+    font-weight: 500;
+}
+/* Enlaces de navegación */
+
+.menu{
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color:#fff;
+    }
+
+
+.titulo {
+    height: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+.titulo::before {
+    background-image: url(img/PatronAmarillo.jpg);
+    background-position: center;
+    content: '';
+    filter:opacity(90%);
+    position: absolute;
+    inset: 0;
+  }
+
+h1 {
+    position: relative;
+    text-align: center;
+    color: #333;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+main{
+    color: black;
+    display: flex;
+}
+
+/* Contenedor para la lista de productos */
+.catalogo {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 20px; 
+}
+  
+/* para la fila de producto*/
+.producto {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
+    gap: 15px;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+}
+  
+/* Ajuste de la imagen en pequeño cuadro */
+.producto-imagen img {
+    width: 100%;
+    border-radius: 6px;
+    object-fit: cover;
+}
+  
+/* Detalles del producto */
+.producto-detalle h3,
+.producto-detalle h4 {
+    margin-bottom: 8px;
+    font-size: 1.25rem;
+}
+  
+.producto-detalle p {
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+    color: #555;
+}
+  
+/* Línea para la cantidad en stock” */
+.product-detalle .stock {
+    font-weight: 500;
+    color: #333;
+}
+  
+/* Precio y botón agrupados juntos*/
+.product-detalle .preco-boton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+  
+.producto-detalle .precio-boton span {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+  
+/* Botón dentro de detalles */
+.producto-detalle button {
+    padding: 8px 12px;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+  
+.product-detalle button:hover {
+    background-color: #b01f1a; 
+}
+  
+/* Para achicar pantallas*/
+@media (max-width: 600px) {
+    .product-item {grid-template-columns: 1fr;}
+}
+  
+
+@media (max-width: 768px) {
+    nav { display: none; }
+    .menu-toggle { display: block; }
+}

@@ -8,7 +8,7 @@ body {
     margin: 0;
 }
 
-.login-container {
+.login-contenido {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
@@ -43,7 +43,3 @@ button:hover {
     background-color: #0056b3;
 }
 
-.forgot-password {
-    text-align: center;
-    margin-top: 10px;
-}
