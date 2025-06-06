@@ -266,4 +266,29 @@ main{
 .confirmar-boton:hover {
 background-color: #b01f1a; /* variante más oscura del rojo */
   }
-  
+
+.carro-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.carro-imagen img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+
+.carro-detalle {
+  flex: 1;
+}
+
+.carro-precio,
+.carro-total {
+  font-size: 0.9em;
+  margin: 2px 0;
+}

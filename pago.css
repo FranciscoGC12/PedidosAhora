@@ -1,0 +1,282 @@
+  * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+
+    :root {
+      --primary-color: #DA291C;
+      --secondary-color: #FFC72C; 
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: #f5f5f5;
+      color: #333;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .back-boton {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    .back-boton:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .contenido-pago {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .seccion {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .seccion h2 {
+      margin-bottom: 1.5rem;
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--secondary-color);
+      padding-bottom: 0.5rem;
+    }
+
+    .resumen-pedido {
+      margin-bottom: 2rem;
+    }
+
+    .item-pedido {
+      display: flex;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .item-imagen {
+      width: 60px;
+      height: 60px;
+      margin-right: 1rem;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .item-detalle {
+      flex: 1;
+    }
+
+    .item-nombre {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .item-precio {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .total-seccion {
+      border-top: 2px solid var(--primary-color);
+      padding-top: 1rem;
+      margin-top: 1rem;
+    }
+
+    .total-fila {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    .total-final {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .form-grupo {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-fila {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #333;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    .metodo-pago {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .pago-opcion {
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .pago-opcion:hover {
+      border-color: var(--primary-color);
+      background-color: #f9f9f9;
+    }
+
+    .pago-opcion.selected {
+      border-color: var(--primary-color);
+      background-color: #fff5f5;
+    }
+
+    .pago-opcion input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .pago-icono {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .detalles-tarjeta {
+      display: none;
+      margin-top: 1rem;
+    }
+
+    .detalles-tarjeta.active {
+      display: block;
+    }
+
+    .boton-pago {
+      width: 100%;
+      padding: 1rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .boton-pago:hover {
+      background-color: #b01f1a;
+    }
+
+    .boton-pago:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .carro-vacio {
+      text-align: center;
+      padding: 3rem;
+      color: #666;
+    }
+
+    .carro-vacio-icono {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      color: #ddd;
+    }
+
+    @media (max-width: 768px) {
+      .contenido {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin: 1rem auto;
+      }
+      
+      .seccion {
+        padding: 1rem;
+      }
+      
+      .form-fila {
+        grid-template-columns: 1fr;
+      }
+      
+      .metodo-pago {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .loading.active {
+      display: block;
+    }
+
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid var(--primary-color);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }

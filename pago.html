@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pago - Pedidos Ahorra</title>
+  <link rel="stylesheet" href="pago.css">
+
+</head>
+<body>
+ <header>
+    <div class="logo">Pedidos Ahorra</div>
+    <button class="back-boton" onclick="window.history.back()">← Volver</button>
+  </header>
+
+  <div class="contenido-pago">
+    <!-- Resumen del Pedido -->
+    <div class="seccion">
+      <h2>Resumen del Pedido</h2>
+      <div id="resumen-pedido" class="resumen-pedido">
+        <!-- Se llenará con JavaScript -->
+      </div>
+      
+      <div class="total-seccion">
+        <div class="total-fila">
+          <span>Subtotal:</span>
+          <span id="subtotal">$0.00</span>
+        </div>
+        <div class="total-fila">
+          <span>Envío:</span>
+          <span id="envio">$2.50</span>
+        </div>
+
+        <div class="total-fila total-final">
+          <span>Total:</span>
+          <span id="total-final">$0.00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulario de Pago -->
+    <div class="seccion">
+      <h2>Información de Pago</h2>
+      
+      <form id="pago-form">
+
+
+        <!-- Método de Pago -->
+        <div class="metodo-form">
+          <h3>Método de Pago</h3>
+          <div class="metodo-pago">
+            <label class="pago-opcion" for="tarjeta">
+              <input type="radio" id="tarjeta" name="metodo-pago" value="tarjeta" checked>
+              <span class="pago-icono">💳</span>
+              <span>Tarjeta</span>
+            </label>
+            
+            <label class="pago-opcion" for="efectivo">
+              <input type="radio" id="efectivo" name="metodo-pago" value="efectivo">
+              <span class="pago-icono">💵</span>
+              <span>Efectivo</span>
+            </label>
+            
+            <label class="pago-opcion" for="transferencia">
+              <input type="radio" id="transferencia" name="metodo-pago" value="transferencia">
+              <span class="pago-icono">🏦</span>
+              <span>Transferencia</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Detalles de Tarjeta -->
+        <div id="detalles-tarjeta" class="detalles-tarjeta active">
+          <div class="datos-form">
+            <label for="numero-tarjeta">Número de Tarjeta</label>
+            <input type="text" id="numero-tarjeta" name="numero-tarjeta" placeholder="1234 5678 9012 3456" maxlength="19">
+          </div>
+          
+          <div class="form-fila">
+            <div>
+              <label for="expiracion">Fecha de Vencimiento</label>
+              <input type="text" id="expiracion" name="expiracion" placeholder="MM/AA" maxlength="5">
+            </div>
+            <div>
+              <label for="cvv">CVV</label>
+              <input type="text" id="cvv" name="cvv" placeholder="123" maxlength="3">
+            </div>
+          </div>
+          
+          <div class="form-grupo">
+            <label for="nombre-tarjeta">Nombre en la Tarjeta</label>
+            <input type="text" id="nombre-tarjeta" name="nombre-tarjeta" placeholder="Como aparece en la tarjeta">
+          </div>
+        </div>
+
+
+
+        <button type="submit" class="boton-pago" id="boton-pago">
+          Confirmar Pedido y Pagar
+        </button>
+      </form>
+
+      <!-- Loading -->
+      <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Procesando tu pedido...</p>
+      </div>
+    </div>
+  </div>
+
+
+<script src="pago.js"></script>
+</body>
+</html>

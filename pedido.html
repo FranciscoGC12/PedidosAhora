@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu Pedido - Pedidos Ahorra</title>
+  <style>
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+
+    :root {
+      --primary-color: #DA291C;
+      --secondary-color: #FFC72C; 
+      --success-color: #28a745;
+      --warning-color: #ffc107;
+      --info-color: #17a2b8;
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: #fff;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .confirmation-card {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .confirmation-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+
+    .success-icon {
+      font-size: 4rem;
+      color: var(--success-color);
+      margin-bottom: 1rem;
+      animation: bounce 0.6s ease-in-out;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    .pedido-numero {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .pedido-fecha {
+      color: #666;
+      margin-bottom: 2rem;
+    }
+
+    .status-tracker {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
+    }
+
+    .status-title {
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      color: var(--primary-color);
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #e9ecef;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2rem;
+      padding-left: 2rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -1.5rem;
+      top: 0.5rem;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      background: #e9ecef;
+      border: 3px solid white;
+      box-shadow: 0 0 0 3px #e9ecef;
+      z-index: 1;
+    }
+
+    .timeline-item.completed::before {
+      background: var(--success-color);
+      box-shadow: 0 0 0 3px var(--success-color);
+    }
+
+    .timeline-item.active::before {
+      background: var(--warning-color);
+      box-shadow: 0 0 0 3px var(--warning-color);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 3px var(--warning-color); }
+      50% { box-shadow: 0 0 0 8px rgba(255, 193, 7, 0.3); }
+      100% { box-shadow: 0 0 0 3px var(--warning-color); }
+    }
+
+    .timeline-content {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 8px;
+      border-left: 4px solid #e9ecef;
+    }
+
+    .timeline-item.completed .timeline-content {
+      border-left-color: var(--success-color);
+    }
+
+    .timeline-item.active .timeline-content {
+      border-left-color: var(--warning-color);
+      background: #fff9c4;
+    }
+
+    .timeline-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .timeline-time {
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .timeline-desc {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 0.5rem;
+    }
+
+    .estimated-time {
+      background: linear-gradient(135deg, var(--info-color), #138496);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      text-align: center;
+      margin-bottom: 2rem;
+      box-shadow: 0 5px 20px rgba(23, 162, 184, 0.2);
+    }
+
+    .estimated-time h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .time-display {
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 0.5rem 0;
+    }
+
+    .order-details {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
+    }
+
+    .order-details h3 {
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+      font-size: 1.2rem;
+    }
+
+    .order-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .order-item:last-child {
+      border-bottom: none;
+    }
+
+    .item-image {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-right: 1rem;
+    }
+
+    .item-info {
+      flex: 1;
+    }
+
+    .item-name {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .item-details {
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      padding: 1rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #b01f1a;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background-color: #545b62;
+      transform: translateY(-2px);
+    }
+
+    .contact-info {
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 2rem;
+      border-left: 4px solid var(--primary-color);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        margin: 1rem auto;
+        padding: 0 0.5rem;
+      }
+      
+      .confirmation-card,
+      .status-tracker,
+      .order-details {
+        padding: 1rem;
+      }
+      
+      .actions {
+        grid-template-columns: 1fr;
+      }
+      
+      .timeline {
+        padding-left: 1rem;
+      }
+      
+      .timeline-item {
+        padding-left: 1.5rem;
+      }
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--success-color);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Pedidos Ahorra</div>
+  </header>
+
+  <div class="container">
+    <!-- Confirmación -->
+    <div class="confirmation-card">
+      <div class="success-icon">✅</div>
+      <h2>¡Pedido Confirmado!</h2>
+      <div class="pedido-numero" id="pedido-numero">Pedido #PA-2025-001</div>
+      <div class="pedido-fecha" id="pedido-fecha">Realizado el 5 de junio, 2025 - 14:30</div>
+      <p>Gracias por tu pedido. Estamos preparando tu comida con mucho cariño.</p>
+    </div>
+
+    <!-- Tiempo estimado -->
+    <div class="estimated-time">
+      <h3>Tiempo estimado de entrega</h3>
+      <div class="time-display" id="countdown">35:00</div>
+      <p>Tu pedido llegará entre las 15:05 y 15:15</p>
+    </div>
+
+    <!-- Seguimiento del pedido -->
+    <div class="status-tracker">
+      <h3 class="status-title">Estado de tu pedido</h3>
+      <div class="timeline">
+        <div class="timeline-item completed">
+          <div class="timeline-content">
+            <div class="timeline-title">
+              <span>🛒</span>
+              <span>Pedido recibido</span>
+            </div>
+            <div class="timeline-time">14:30</div>
+            <div class="timeline-desc">Tu pedido ha sido confirmado y el pago procesado exitosamente.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item active">
+          <div class="timeline-content">
+            <div class="timeline-title">
+              <span>👨‍🍳</span>
+              <span>Preparando tu pedido</span>
+            </div>
+            <div class="timeline-time">14:35</div>
+            <div class="timeline-desc">Nuestros chefs están preparando tu comida con ingredientes frescos.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-title">
+              <span>🚗</span>
+              <span>En camino</span>
+            </div>
+            <div class="timeline-time">~15:00</div>
+            <div class="timeline-desc">Tu pedido saldrá para entrega.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-title">
+              <span>🏠</span>
+              <span>Entregado</span>
+            </div>
+            <div class="timeline-time">~15:10</div>
+            <div class="timeline-desc">¡Disfruta tu comida!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detalles del pedido -->
+    <div class="order-details">
+      <h3>Detalles de tu pedido</h3>
+      <div id="order-items">
+        <!-- Se llenará con JavaScript -->
+      </div>
+      
+      <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 2px solid #f0f0f0;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+          <span>Subtotal:</span>
+          <span id="order-subtotal">$0.00</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+          <span>Envío:</span>
+          <span>$2.50</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1rem; color: var(--primary-color);">
+          <span>Total:</span>
+          <span id="order-total">$0.00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Acciones -->
+    <div class="actions">
+      <button class="btn btn-primary" onclick="trackOrder()">Seguir mi pedido</button>
+      <a href="productos.html" class="btn btn-secondary">Hacer otro pedido</a>
+    </div>
+
+    <!-- Información de contacto -->
+    <div class="contact-info">
+      <h4>¿Necesitas ayuda?</h4>
+      <p>Contactanos: +54 9 11 1234-5678</p>
+      <p>WhatsApp: +54 9 11 1234-5678</p>
+    </div>
+  </div>
+
+  <!-- Notificación -->
+  <div id="notification" class="notification">
+    <span id="notification-text"></span>
+  </div>
+
+  <script>
+    let pedidoData = {};
+    let timeLeft = 35 * 60; // 35 minutos en segundos
+    let currentStatus = 1; // 0: recibido, 1: preparando, 2: en camino, 3: entregado
+
+    // Generar número de pedido único
+    function generarNumeroPedido() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const time = String(now.getHours()).padStart(2, '0') + String(now.getMinutes()).padStart(2, '0');
+      return `PA-${year}${month}${day}-${time}`;
+    }
+
+    // Cargar datos del pedido
+    function cargarPedido() {
+      const carritoData = localStorage.getItem('pedidoData');
+      const fecha = new Date();
+      
+      if (carritoData) {
+        pedidoData = JSON.parse(carritoData);
+      } else {
+        // Datos de ejemplo si no hay datos guardados
+        pedidoData = {
+          items: [
+            { nombre: "Hamburguesa Clásica", precio: 5.99, cantidad: 1, imgSrc: "img/Hamburguesa.jpg" },
+            { nombre: "Pizza Pepperoni", precio: 8.50, cantidad: 1, imgSrc: "img/Pizza.jpg" }
+          ],
+          total: 14.49
+        };
+      }
+
+      // Actualizar UI
+      document.getElementById('pedido-numero').textContent = `Pedido #${generarNumeroPedido()}`;
+      document.getElementById('pedido-fecha').textContent = 
+        `Realizado el ${fecha.toLocaleDateString('es-ES', { 
+          day: 'numeric', 
+          month: 'long', 
+          year: 'numeric' 
+        })} - ${fecha.toLocaleTimeString('es-ES', { 
+          hour: '2-digit', 
+          minute: '2-digit' 
+        })}`;
+
+      mostrarDetallesPedido();
+    }
+
+    // Mostrar detalles del pedido
+    function mostrarDetallesPedido() {
+      const container = document.getElementById('order-items');
+      let html = '';
+      let subtotal = 0;
+
+      pedidoData.items.forEach(item => {
+        const itemTotal = item.precio * item.cantidad;
+        subtotal += itemTotal;
+        
+        html += `
+          <div class="order-item">
+            <img src="${item.imgSrc}" alt="${item.nombre}" class="item-image">
+            <div class="item-info">
+              <div class="item-name">${item.nombre}</div>
+              <div class="item-details">$${item.precio.toFixed(2)} x ${item.cantidad} = $${itemTotal.toFixed(2)}</div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      
+      const envio = 2.50;
+      const total = subtotal + envio;
+      
+      document.getElementById('order-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+      document.getElementById('order-total').textContent = `$${total.toFixed(2)}`;
+    }
+
+    // Countdown timer
+    function startCountdown() {
+      const countdownElement = document.getElementById('countdown');
+      
+      const timer = setInterval(() => {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        
+        countdownElement.textContent = 
+          `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          countdownElement.textContent = "¡Ya llega!";
+        }
+        
+        timeLeft--;
+      }, 1000);
+    }
+
+    // Actualizar estado del pedido
+    function updateOrderStatus() {
+      const statuses = [
+        { time: 25 * 60, status: 2 }, // En camino a los 10 minutos
+        { time: 5 * 60, status: 3 }   // Entregado a los 30 minutos
+      ];
+
+      const statusInterval = setInterval(() => {
+        statuses.forEach(statusUpdate => {
+          if (timeLeft === statusUpdate.time && currentStatus < statusUpdate.status) {
+            currentStatus = statusUpdate.status;
+            updateTimeline();
+            showNotification(getStatusMessage(currentStatus));
+          }
+        });
+
+        if (timeLeft <= 0) {
+          clearInterval(statusInterval);
+        }
+      }, 1000);
+    }
+
+    // Actualizar timeline visual
+    function updateTimeline() {
+      const timelineItems = document.querySelectorAll('.timeline-item');
+      
+      timelineItems.forEach((item, index) => {
+        item.classList.remove('active', 'completed');
+        
+        if (index < currentStatus) {
+          item.classList.add('completed');
+        } else if (index === currentStatus) {
+          item.classList.add('active');
+        }
+      });
+    }
+
+    // Obtener mensaje de estado
+    function getStatusMessage(status) {
+      const messages = [
+        "Tu pedido ha sido recibido",
+        "Estamos preparando tu pedido",
+        "¡Tu pedido está en camino!",
+        "¡Tu pedido ha sido entregado!"
+      ];
+      return messages[status] || "";
+    }
+
+    // Mostrar notificación
+    function showNotification(message) {
+      const notification = document.getElementById('notification');
+      const notificationText = document.getElementById('notification-text');
+      
+      notificationText.textContent = message;
+      notification.classList.add('show');
+      
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 4000);
+    }
+
+    // Función para seguir pedido (simulada)
+    function trackOrder() {
+      showNotification("Función de seguimiento en tiempo real próximamente");
+    }
+
+    // Inicializar página
+    document.addEventListener('DOMContentLoaded', function() {
+      cargarPedido();
+      startCountdown();
+      updateOrderStatus();
+      
+      // Limpiar datos del pedido después de cargar
+      localStorage.removeItem('pedidoData');
+    });
+  </script>
+</body>
+</html>

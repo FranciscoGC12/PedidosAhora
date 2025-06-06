@@ -31,22 +31,22 @@ document.querySelector('.carro-ventana').addEventListener('click', () => {
 });
 
 function updateCarroCount() {
-  const totalCantidad = carro.reduce((sum, item) => sum + item.quantity, 0);
+  const totalCantidad = carro.reduce((sum, item) => sum + item.cantidad, 0);
   carroCount.textContent = totalCantidad;
 }
 
 
 function añadirCarro(productos) {
-  const nombre = productos.getAttribute('nombre');
-  const precio = parseFloat(productos.getAttribute('precio'));
+  const nombre = productos.dataset.nombre;
+  const precio = parseFloat(productos.dataset.precio);
   const imgTag = productos.querySelector('.producto-imagen img');
-  const imgSrc = imgTag ? imgTag.getAttribute('fuente') : '';
+  const imgSrc = imgTag ? imgTag.getAttribute('src') : '';
   // Si el producto ya existe, sólo aumentamos cantidad
-  const existe = carro.find(item => item.name === nombre);
+  const existe = carro.find(item => item.nombre === nombre);
   if (existe) {
-    existe.quantity += 1;
+    existe.cantidad += 1;
   } else {
-    carro.push({ nombre, precio, imgSrc, quantity: 1 });
+    carro.push({ nombre, precio, imgSrc, cantidad: 1 });
   }
   updateCarroCount();
 }
@@ -59,24 +59,24 @@ function renderCarro() {
     carroContenido.innerHTML = '<p style="text-align:center; margin:20px 0;">Tu carrito está vacío.</p>';
   } else {
     carro.forEach((item, idx) => {
-      const itemTotal = (item.price * item.quantity);
+      const itemTotal = (item.precio * item.cantidad);
       total += itemTotal;
 
       // Crear una carpeta para .carro-item
       const carroItemDiv = document.createElement('div');
-      carroItemDiv.classList.add('cart-item');
+      carroItemDiv.classList.add('carro-item');
 
       carroItemDiv.innerHTML = `
         <div class="carro-imagen">
-          <img src="${item.imageSrc}" alt="${item.name}">
+          <img src="${item.imgSrc}" alt="${item.nombre}">
         </div>
         <div class="carro-detalle">
-          <h4>${item.name}</h4>
-          <p class="carro-precio">$${item.precio.toFixed(2)} x ${item.quantity}</p>
+          <h4>${item.nombre}</h4>
+          <p class="carro-precio">$${item.precio.toFixed(2)} x ${item.cantidad}</p>
           <p class="carro-total">Subtotal: $${itemTotal.toFixed(2)}</p>
         </div>
       `;
-      carroContenido.appendChild(cartItemDiv);
+      carroContenido.appendChild(carroItemDiv);
     });
   }
 
@@ -90,6 +90,7 @@ document.querySelectorAll('.añadirCarro').forEach(btn => {
   });
 });
 
+/*
 confirmarOrdenBoton.addEventListener('click', () => {
   if (carro.length === 0) {
     alert('No hay productos en el carrito.');
@@ -101,4 +102,19 @@ confirmarOrdenBoton.addEventListener('click', () => {
   updateCarroCount();
   renderCarro();
   toggleCarroModelo(false);
+});
+*/
+
+confirmarOrdenBoton.addEventListener('click', () => {
+  if (carro.length === 0) {
+    alert('No hay productos en el carrito.');
+    return;
+  }
+
+  // Guardar el carrito y total en localStorage
+  localStorage.setItem('carrito', JSON.stringify(carro));
+  localStorage.setItem('total', carroTotal.textContent);
+
+  // Redirigir a página de pago
+  window.location.href = 'pago.html';
 });
