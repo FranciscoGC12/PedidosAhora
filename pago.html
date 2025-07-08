@@ -18,7 +18,7 @@
     <div class="seccion">
       <h2>Resumen del Pedido</h2>
       <div id="resumen-pedido" class="resumen-pedido">
-        <!-- Se llenará con JavaScript -->
+        
       </div>
       
       <div class="total-seccion">
@@ -28,7 +28,7 @@
         </div>
         <div class="total-fila">
           <span>Envío:</span>
-          <span id="envio">$2.50</span>
+          <span id="envio">≈1000</span>
         </div>
 
         <div class="total-fila total-final">
@@ -51,25 +51,25 @@
           <div class="metodo-pago">
             <label class="pago-opcion" for="tarjeta">
               <input type="radio" id="tarjeta" name="metodo-pago" value="tarjeta" checked>
-              <span class="pago-icono">💳</span>
+              <span class="pago-icono"></span>
               <span>Tarjeta</span>
             </label>
             
             <label class="pago-opcion" for="efectivo">
               <input type="radio" id="efectivo" name="metodo-pago" value="efectivo">
-              <span class="pago-icono">💵</span>
+              <span class="pago-icono"></span>
               <span>Efectivo</span>
             </label>
             
-            <label class="pago-opcion" for="transferencia">
-              <input type="radio" id="transferencia" name="metodo-pago" value="transferencia">
-              <span class="pago-icono">🏦</span>
-              <span>Transferencia</span>
+            <label class="pago-opcion" for="mercado-pago">
+              <input type="radio" id="mercado-pago" name="metodo-pago" value="mercado-pago">
+              <span class="pago-icono" src="img/mp-logo.png"></span>
+              <span>Mercado Pago</span>
             </label>
           </div>
         </div>
 
-        <!-- Detalles de Tarjeta -->
+        <!-- Detalles de Tarjeta (temporal)-->
         <div id="detalles-tarjeta" class="detalles-tarjeta active">
           <div class="datos-form">
             <label for="numero-tarjeta">Número de Tarjeta</label>
@@ -89,7 +89,7 @@
           
           <div class="form-grupo">
             <label for="nombre-tarjeta">Nombre en la Tarjeta</label>
-            <input type="text" id="nombre-tarjeta" name="nombre-tarjeta" placeholder="Como aparece en la tarjeta">
+            <input type="text" id="nombre-tarjeta" name="nombre-tarjeta" placeholder="Nombre y apellido">
           </div>
         </div>
 
@@ -100,7 +100,7 @@
         </button>
       </form>
 
-      <!-- Loading -->
+      <!-- Loading (externo)-->
       <div id="loading" class="loading">
         <div class="spinner"></div>
         <p>Procesando tu pedido...</p>

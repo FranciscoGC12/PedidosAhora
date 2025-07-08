@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedidos Completados - Pedidos Ahorra</title>
+  <link rel="stylesheet" href="reporte.css">
+
+</head>
+<body>
+  <header>
+    <div class="logo">Pedidos Ahorra</div>
+    <button class="menu">☰</button>
+    <nav>
+      <a href="index.html">Inicio</a>
+ <!--     <a href="productos.html">Productos</a>
+      <a href="pedidos-completados.html">Pedidos</a>
+    -->     
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <div class="contenedor">
+    <h1 class="pagina-titulo">Pedidos Completados</h1>
+
+
+
+    <!-- Estadísticas -->
+    <div class="estadisticas">
+      <div class="carta-estadistica">
+        <div class="numero-estadistica" id="total-pedidos">156</div>
+        <div class="texto-estadistica">Total Pedidos</div>
+      </div>
+      <div class="carta-estadistica">
+        <div class="numero-estadistica" id="pedidos-completados">142</div>
+        <div class="texto-estadistica">Completados</div>
+      </div>
+    </div>
+
+    <!-- Producto más vendido -->
+    <div class="producto-mas-vendido">
+      <h3> Producto Más Vendido</h3>
+      <div class="producto-destacado">
+        <div class="producto-info">
+          <span class="producto-nombre" id="producto-top">Hamburguesa Clásica</span>
+          <span class="producto-cantidad" id="producto-cantidad">23 vendidas</span>
+        </div>
+        <div class="producto-porcentaje" id="producto-porcentaje">16.2% del total</div>
+      </div>
+    </div>
+
+    <!-- Tabla de pedidos -->
+    <div class="tabla-contenedor">
+      <table id="tabla-pedidos">
+        <thead>
+          <tr>
+            <th>N° Pedido</th>
+            <th>Fecha</th>
+            <th>Cliente</th>
+            <th>Productos</th>
+            <th>Total</th>
+            <th>Estado</th>
+            <th>Método Pago</th>
+            <th>Delivery</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-body">
+          <!-- Los datos se cargarán con JavaScript -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Paginación -->
+    <div class="paginas">
+      <button onclick="cambiarPagina(-1)">« Anterior</button>
+      <button class="activo">1</button>
+      <button onclick="cambiarPagina(1)">2</button>
+      <button onclick="cambiarPagina(1)">3</button>
+      <button onclick="cambiarPagina(1)">Siguiente »</button>
+    </div>
+  </div>
+
+  <script>
+    // Datos de ejemplo
+    const pedidosData = [
+      {
+        id: '#0000-0001',
+        fecha: '05/06/2025',
+        hora: '14:30',
+        cliente: 'Juansito',
+        productos: ['Hamburguesa Clásica', 'Papas Fritas'],
+        total: 122000,
+        estado: 'completado',
+        metodoPago: 'Efectivo',
+        delivery: 'Carlitos'
+      },
+      {
+        id: '#0000-0002',
+        fecha: '04/03/1990',
+        hora: '13:15',
+        cliente: 'María del barrio',
+        productos: ['Pizza Pepperoni', 'Coca Cola'],
+        total: 11950,
+        estado: 'completado',
+        metodoPago: 'Tarjeta',
+        delivery: 'CarliDOS'
+      },
+      {
+        id: 'PA-20250605-1200',
+        fecha: '2025-06-05',
+        hora: '12:00',
+        cliente: 'Carlos Rodríguez',
+        productos: ['Ensalada César', 'Agua'],
+        total: 8.75,
+        estado: 'cancelado',
+        metodoPago: 'MercadoPago',
+        delivery: '-'
+      },
+      {
+        id: 'PA-20250604-1945',
+        fecha: '2025-06-04',
+        hora: '19:45',
+        cliente: 'Ana Martínez',
+        productos: ['Pasta Carbonara', 'Vino Tinto'],
+        total: 18.99,
+        estado: 'completado',
+        metodoPago: '💳 Tarjeta',
+        delivery: 'Luis García'
+      },
+      {
+        id: 'PA-20250604-1830',
+        fecha: '2025-06-04',
+        hora: '18:30',
+        cliente: 'Pedro López',
+        productos: ['Sushi Mix', 'Té Verde'],
+        total: 24.50,
+        estado: 'completado',
+        metodoPago: 'MercadoPago',
+        delivery: 'Carlos Mendoza'
+      },
+      {
+        id: 'PA-20250604-1715',
+        fecha: '2025-06-04',
+        hora: '17:15',
+        cliente: 'Laura Sánchez',
+        productos: ['Tacos Mexicanos', 'Cerveza'],
+        total: 15.25,
+        estado: 'completado',
+        metodoPago: 'Efectivo',
+        delivery: 'Ana Torres'
+      },
+      {
+        id: 'PA-20250603-2010',
+        fecha: '2025-06-03',
+        hora: '20:10',
+        cliente: 'Roberto Silva',
+        productos: ['Hamburguesa Clásica', 'Coca Cola'],
+        total: 9.99,
+        estado: 'completado',
+        metodoPago: 'Efectivo',
+        delivery: 'Luis García'
+      },
+      {
+        id: 'PA-20250603-1850',
+        fecha: '2025-06-03',
+        hora: '18:50',
+        cliente: 'Carmen Ruiz',
+        productos: ['Pizza Pepperoni', 'Ensalada Verde'],
+        total: 16.75,
+        estado: 'completado',
+        metodoPago: 'MercadoPago',
+        delivery: 'Carlos Mendoza'
+      }
+    ];
+
+    let paginaActual = 1;
+    const pedidosPorPagina = 10;
+    let pedidosFiltrados = [...pedidosData];
+
+    // Cargar datos iniciales
+    function cargarPedidos() {
+      const tbody = document.getElementById('tabla-body');
+      const inicio = (paginaActual - 1) * pedidosPorPagina;
+      const fin = inicio + pedidosPorPagina;
+      const pedidosPagina = pedidosFiltrados.slice(inicio, fin);
+
+      let html = '';
+      pedidosPagina.forEach(pedido => {
+        const estadoClass = pedido.estado === 'completado' ? 'completado' : 'cancelado';
+        const productosTexto = pedido.productos.join(', ');
+        
+        html += `
+          <tr>
+            <td><strong>${pedido.id}</strong></td>
+            <td>${formatearFecha(pedido.fecha)} ${pedido.hora}</td>
+            <td>${pedido.cliente}</td>
+            <td>${productosTexto}</td>
+            <td class="total">$${pedido.total.toFixed(2)}</td>
+            <td><span class="status ${estadoClass}">${pedido.estado.toUpperCase()}</span></td>
+            <td>${pedido.metodoPago}</td>
+            <td>${pedido.delivery}</td>
+          </tr>
+        `;
+      });
+
+      tbody.innerHTML = html;
+      actualizarEstadisticas();
+    }
+
+    // Formatear fecha
+    function formatearFecha(fecha) {
+      const date = new Date(fecha);
+      return date.toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      });
+    }
+
+    // Actualizar estadísticas y producto más vendido
+    function actualizarEstadisticas() {
+      const completados = pedidosFiltrados.filter(p => p.estado === 'completado').length;
+
+      document.getElementById('total-pedidos').textContent = pedidosFiltrados.length;
+      document.getElementById('pedidos-completados').textContent = completados;
+      
+      // Calcular producto más vendido
+      calcularProductoMasVendido();
+    }
+
+    // Calcular producto más vendido
+    function calcularProductoMasVendido() {
+      const contadorProductos = {};
+      let totalProductos = 0;
+
+      pedidosFiltrados
+        .filter(p => p.estado === 'completado')
+        .forEach(pedido => {
+          pedido.productos.forEach(producto => {
+            contadorProductos[producto] = (contadorProductos[producto] || 0) + 1;
+            totalProductos++;
+          });
+        });
+
+      // Encontrar el producto más vendido
+      let productoMasVendido = '';
+      let maxVentas = 0;
+
+      for (const [producto, cantidad] of Object.entries(contadorProductos)) {
+        if (cantidad > maxVentas) {
+          maxVentas = cantidad;
+          productoMasVendido = producto;
+        }
+      }
+
+      // Actualizar la UI
+      if (productoMasVendido) {
+        const porcentaje = ((maxVentas / totalProductos) * 100).toFixed(1);
+        document.getElementById('producto-top').textContent = productoMasVendido;
+        document.getElementById('producto-cantidad').textContent = `${maxVentas} vendidas`;
+        document.getElementById('producto-porcentaje').textContent = `${porcentaje}% del total`;
+      }
+    }
+
+    // Filtrar pedidos
+    function filtrarPedidos() {
+      // Como eliminamos los filtros, mantenemos todos los pedidos
+      pedidosFiltrados = [...pedidosData];
+      paginaActual = 1;
+      cargarPedidos();
+    }
+
+    // Ver detalle del pedido
+    function verDetalle(idPedido) {
+      const pedido = pedidosData.find(p => p.id === idPedido);
+      alert(`Detalles del pedido ${idPedido}:\n\n` +
+            `Cliente: ${pedido.cliente}\n` +
+            `Productos: ${pedido.productos.join(', ')}\n` +
+            `Total: ${pedido.total.toFixed(2)}\n` +
+            `Estado: ${pedido.estado.toUpperCase()}\n` +
+            `Delivery: ${pedido.delivery}`);
+    }
+
+    // Cambiar página
+    function cambiarPagina(direccion) {
+      const totalPaginas = Math.ceil(pedidosFiltrados.length / pedidosPorPagina);
+      
+      if (direccion > 0 && paginaActual < totalPaginas) {
+        paginaActual++;
+      } else if (direccion < 0 && paginaActual > 1) {
+        paginaActual--;
+      }
+      
+      cargarPedidos();
+    }
+
+    // Inicializar página
+    document.addEventListener('DOMContentLoaded', function() {
+      // Cargar pedidos iniciales
+      cargarPedidos();
+    });
+  </script>
+</body>
+</html>
