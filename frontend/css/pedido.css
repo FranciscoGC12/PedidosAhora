@@ -139,13 +139,13 @@
       transition: all 0.3s ease;
     }
 
-    .barra-icono-completado {
+    .barra-icono.completado {
       background: var(--success-color);
       border-color: var(--success-color);
       color: white;
     }
 
-    .barra-icono-activo {
+    .barra-icono.activo {
       background: var(--warning-color);
       border-color: var(--warning-color);
       color: white;

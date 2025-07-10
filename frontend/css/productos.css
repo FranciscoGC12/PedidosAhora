@@ -292,3 +292,48 @@ background-color: #b01f1a; /* variante más oscura del rojo */
   font-size: 0.9em;
   margin: 2px 0;
 }
+
+.carro-controles {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.btn-cantidad {
+  width: 25px;
+  height: 25px;
+  border: 1px solid #ddd;
+  background: #f8f9fa;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-cantidad:hover {
+  background: #e9ecef;
+}
+
+.cantidad {
+  min-width: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.btn-eliminar {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-left: auto;
+}
+
+.btn-eliminar:hover {
+  background: #c82333;
+}

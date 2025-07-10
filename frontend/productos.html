@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Menu Comida</title>
-  <link rel="stylesheet" href="productos.css">
+  <link rel="stylesheet" href="css/productos.css">
 </head>
 <body>
   <header>
@@ -30,38 +30,9 @@
 
   <main>
     <h2>Nuestro Menú</h2>
-    <div class="catalogo">
-  
-      <div class="producto" data-nombre="Hamburguesa Clásica" data-precio="5.99" data-stock="15">
-        <div class="producto-imagen">
-          <img src="img/Hamburguesa.jpg" alt="Hamburguesa">
-        </div>
-        <div class="producto-detalle">
-          <h3 >Hamburguesa Clásica</h3>
-          <p>Carne 100% vacuna, queso, lechuga y tomate.</p>
-          <p class="stock">En stock: 15 unidades</p>
-          <div class="precio-boton">
-            <span>$5.99</span>
-            <button class="añadirCarro">Agregar al carrito</button>
-          </div>
-        </div>
-      </div>
-  
-
-      <div class="producto" data-nombre="Ensalada César" data-precio="4.50" data-stock="10">
-        <div class="producto-imagen">
-          <img src="img/Pizza.jpg" alt="Pizza">
-        </div>
-        <div class="producto-detalle">
-          <h4 id="nombre">Pizza Pepperoni</h4>
-          <p>Deliciosa pizza con extra pepperoni y queso.</p>
-          <p class="stock">En stock: 8 unidades</p>
-          <div class="precio-boton">
-            <span>$8.50</span>
-            <button class="añadirCarro">Agregar al carrito</button>
-          </div>
-        </div>
-      </div>
+    <div class="catalogo" id="catalogo">
+          
+      <div class="prueba">Cargando productos</div>
   
       
     </div>
@@ -91,6 +62,7 @@
   </div>
 
 </body>
-<script src="carrito.js"></script>
+<script src="js/productos.js"></script>
+<script src="js/carrito.js"></script>
 
 </html>
