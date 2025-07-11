@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Menu Comida</title>
+  <title>Menu Comida - PedidosAhora</title>
   <link rel="stylesheet" href="css/productos.css">
 </head>
 <body>
   <header>
-    <div class="logo">Pedidos Ahorra</div>
+    <div class="logo">PedidosAhora</div>
     <button class="menu">☰</button>
     <nav>
       <a href="index.html">Inicio</a>
@@ -18,51 +18,156 @@
         <span id="carro-count" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
       </button>
     </nav>
-
-    </div>
   </header>
 
-  <section class= "titulo">
+  <section class="titulo">
     <div>
       <h1>¡Ordena tu comida favorita!</h1>
     </div>
   </section>
 
+  <!-- Herramientas de filtro y búsqueda -->
+  <div class="herramientas-productos">
+    <div class="busqueda-productos">
+      <input type="text" id="busqueda-input" placeholder="🔍 Buscar productos..." 
+             onkeyup="buscarProductosEnTiempoReal(this.value)">
+    </div>
+    
+    <div class="filtros-productos">
+      <select id="ordenar-select" onchange="aplicarOrdenamiento()">
+        <option value="nombre-asc">Ordenar por Nombre (A-Z)</option>
+        <option value="nombre-desc">Ordenar por Nombre (Z-A)</option>
+        <option value="precio-asc">Precio: Menor a Mayor</option>
+        <option value="precio-desc">Precio: Mayor a Menor</option>
+        <option value="stock-desc">Mayor Stock</option>
+      </select>
+      
+      <button onclick="resetearFiltros()">🔄 Resetear</button>
+      <button onclick="window.catalogo.refrescar()">↻ Recargar</button>
+    </div>
+  </div>
+
   <main>
     <h2>Nuestro Menú</h2>
     <div class="catalogo" id="catalogo">
-          
-      <div class="prueba">Cargando productos</div>
-  
-      
+      <div class="loading-productos">
+        <div class="spinner"></div>
+        <p>🔄 Cargando productos...</p>
+      </div>
     </div>
   </main>
   
   <footer>
     <div>
-      <p>© 2025 Mi Restaurante. Todos los derechos reservados.</p>
-      <p>Contacto: contacto@micomida.com | +54 9 11 1234-5678</p>
+      <p>© 2025 PedidosAhora. Todos los derechos reservados.</p>
+      <p>Contacto: contacto@pedidosahora.com | +54 9 11 1234-5678</p>
     </div>
   </footer>
 
+  <!-- Modal del carrito -->
   <div id="carro-modelo" class="carro-oculto">
     <div class="carro-ventana"></div>
     <div class="carro-contenido">
       <button id="cerrar-carro" class="cerrar-btoon">✕</button>
       <h2>Tu Carrito</h2>
       <div id="carro-contenido">
-        <!-- Aquí se inyectarán en java script -->
+        <!-- Aquí se inyectarán los productos del carrito -->
       </div>
       <div class="carro-total">
         <span>Total:</span>
-        <span id="carro-total">$0.00</span>
+        <span id="carro-total">$0</span>
       </div>
       <button id="confirmar-pedido" class="confirmar-boton">Confirmar pedido</button>
     </div>
   </div>
 
-</body>
-<script src="js/productos.js"></script>
-<script src="js/carrito.js"></script>
+  <!-- Scripts en orden de dependencias -->
+  
+  <!-- 1. Configuración inicial -->
+  <script>
+    // Configuración global antes de cargar clases
+    window.API_CONFIG = {
+        BASE_URL: 'http://localhost:5000/api',
+        TIMEOUT: 10000,
+        RETRY_ATTEMPTS: 3
+    };
+  </script>
+  
+  <!-- 2. Clase DATABASE (debe cargar primero) -->
+  <script src="js/classes/Database.js"></script>
+  
+  <!-- 3. Utilidades API (usa DATABASE) -->
+  <script src="js/utils/api.js"></script>
+  
+  <!-- 4. Clases principales -->
+  <script src="js/classes/Producto.js"></script>
+  <script src="js/classes/EspecificacionDePedido.js"></script>
+  <script src="js/classes/Pedido.js"></script>
+  
+  <!-- 5. Lógica específica de páginas -->
+  <script src="js/productos.js"></script>
+  <script src="js/carrito.js"></script>
 
+  <!-- 4. Funciones adicionales para esta página -->
+  <script>
+    // Función de búsqueda en tiempo real con debounce
+    let timeoutBusqueda;
+    function buscarProductosEnTiempoReal(termino) {
+      clearTimeout(timeoutBusqueda);
+      timeoutBusqueda = setTimeout(() => {
+        window.buscarProductos(termino);
+      }, 300); // Esperar 300ms después de que el usuario deje de escribir
+    }
+
+    // Función para aplicar ordenamiento
+    function aplicarOrdenamiento() {
+      const selectOrdenar = document.getElementById('ordenar-select');
+      const [criterio, direccion] = selectOrdenar.value.split('-');
+      window.ordenarProductos(criterio, direccion);
+    }
+
+    // Limpiar búsqueda cuando se resetean filtros
+    function resetearFiltros() {
+      document.getElementById('busqueda-input').value = '';
+      document.getElementById('ordenar-select').value = 'nombre-asc';
+      window.resetearFiltros();
+    }
+
+    // Función para mostrar estadísticas (opcional, para debugging)
+    function mostrarEstadisticas() {
+      if (window.catalogo) {
+        const stats = window.catalogo.obtenerEstadisticas();
+        console.log('📊 Estadísticas del catálogo:', stats);
+      }
+    }
+
+    // Auto-refresh cada 5 minutos (opcional)
+    setInterval(() => {
+      if (window.catalogo && window.apiCache) {
+        // Solo refrescar si no hay actividad reciente
+        const ultimaActividad = localStorage.getItem('ultimaActividad');
+        const ahora = Date.now();
+        
+        if (!ultimaActividad || (ahora - parseInt(ultimaActividad)) > 300000) { // 5 minutos
+          window.catalogo.refrescar();
+        }
+      }
+    }, 300000); // 5 minutos
+
+    // Registrar actividad del usuario
+    ['click', 'keypress', 'scroll'].forEach(evento => {
+      document.addEventListener(evento, () => {
+        localStorage.setItem('ultimaActividad', Date.now().toString());
+      });
+    });
+
+    // Debug: función global para inspeccionar el estado
+    window.debug = {
+      catalogo: () => window.catalogo,
+      pedido: () => window.pedidoActual,
+      api: () => window.api,
+      stats: mostrarEstadisticas
+    };
+  </script>
+</body>
 </html>
